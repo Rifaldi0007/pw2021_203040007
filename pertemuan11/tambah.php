@@ -1,6 +1,3 @@
-
-
-
 <?php
 require 'functions.php';
 
@@ -11,10 +8,7 @@ if (isset($_POST['tambah'])) {
                 document.location.href = 'latihan3.php';
           </script>";
   } else {
-    echo "<script>
-                alert('Data Gagal ditambahkan!');
-                document.location.href = 'latihan3.php';
-          </script>";
+    echo "data gagal ditambah!";
   }
 }
 ?>
@@ -26,7 +20,7 @@ if (isset($_POST['tambah'])) {
     <ul>
       <li>
         <label for="gambar">Gambar </label><br>
-        <input type="file" name="gambar" id="gambar" required><br><br>
+        <input type="text" name="gambar" id="gambar" required><br><br>
       </li>
       <li>
         <label for="nama">nama </label><br>
@@ -47,7 +41,7 @@ if (isset($_POST['tambah'])) {
       <br>
       <button type="submit" name="tambah">Tambah Data!</button>
       <button type="submit">
-        <a href="latihan3.php">Kembali</a>
+        <a href="index.php">Kembali</a>
       </button>
     </ul>
   </div>
