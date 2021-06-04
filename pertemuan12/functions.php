@@ -104,23 +104,27 @@ function cari($keyword)
 
 function login($data)
 {
-  $conn = Koneksi();
+  $conn = koneksi();
 
   $username = htmlspecialchars($data['username']);
   $password = htmlspecialchars($data['password']);
 
-  if (query("SELECT * FROM user WHERE username = '$username' && password = '$password'")) {
+  //cek dulu usernme
+  if($user = query("SELECT * FROM user WHERE username = '$username'")){
+    //cek password
+    if(password_verify($password, $user['password'])){
     //set session
     $_SESSION['login'] = true;
 
-    header("location: index.php");
+    header("Location: index.php");
     exit;
-  }else {
-    return [
-      'error' => true,
-      'pesan' => 'Username / Password salah!!'
-    ];
+    }
+    
   }
+    return[
+      'error' => true,
+      'pesan' => 'username / password salah!'
+    ];
 }
 
 function registrasi($data)
@@ -131,20 +135,20 @@ function registrasi($data)
   $password1 = mysqli_real_escape_string($conn, $data['password1']);
   $password2 = mysqli_real_escape_string($conn, $data['password2']);
 
-  //jika username atau password kosong
-  if(empty($username) || empty($password2) || empty($password2)) {
+  //jika username / password kosong
+  if(empty($username) || empty($password1) || empty($password2)) {
     echo "<script>
-              alert('username/password tidak boleh kosong!');
-              document.location.href = 'registrasi.php';
+            alert('usrname / password tidak boleh kosong');
+            document.location.href = 'registrasi.php';
           </script>";
     return false;
   }
 
-  //jika user sudah ada
+  //jika username sudah ada
   if(query("SELECT * FROM user WHERE username = '$username'")){
     echo "<script>
-              alert('username sudah terdafdar!!!');
-              document.location.href = 'registrasi.php';
+            alert('usrname sudah ada');
+            document.location.href = 'registrasi.php';
           </script>";
     return false;
   }
@@ -152,29 +156,29 @@ function registrasi($data)
   //jika konfirmasi pass tidak sesuai
   if($password1 !== $password2){
     echo "<script>
-              alert('konfirmasi password tidak sesuai');
-              document.location.href = 'registrasi.php';
+            alert('password tidak sesuai');
+            document.location.href = 'registrasi.php';
           </script>";
     return false;
   }
 
-  //jika pass < 5 digit
-  if(strlen($password1) < 5){
+  //jika password < 5 digit
+  if(strlen($password1) < 5) {
     echo "<script>
-              alert('password terlalu pendek');
-              document.location.href = 'registrasi.php';
+            alert('pass terlalu pendek');
+            document.location.href = 'registrasi.php';
           </script>";
     return false;
   }
 
-  //jika pass dan usr sudah sesuai
+  //jika username & password sudah sesuai
   //enkripsi pass
   $password_baru = password_hash($password1, PASSWORD_DEFAULT);
   //insert ke tabel user
   $query = "INSERT INTO user
-                VALUES
-                (null, '$username', '$password_baru')
-                ";
-  mysqli_query($conn, $query) or die(mysqli_error($conn));
-  return mysqli_affected_rows($conn);
+              VALUES
+              (null, '$username', '$password_baru')
+              ";
+   mysqli_query($conn, $query) or die(mysqli_error($conn));
+   return mysqli_affected_rows($conn);           
 }

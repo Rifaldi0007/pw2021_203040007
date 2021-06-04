@@ -1,21 +1,18 @@
 <?php
-    require 'functions.php';
+require 'functions.php';
 
-    if(isset($_POST['registrasi'])){
-        if(registrasi($_POST) > 0){
-            echo "<script>
-                    alert('user baru berhasil ditambahkan silahka login');
-                    document.location.href = 'login.php';
-                  </script>";
-        }else{
-            echo 'user gagal ditambahkan';
-        }
-    }
+if(isset($_POST['registrasi'])) {
+   if (registrasi($_POST) > 0) {
+    echo "<script>
+            alert('user baru berhasil ditambahkan');
+            document.location.href = 'login.php';
+        </script>";
+   }else{
+       echo 'user gagal ditambahkan';
+   }
+}
+
  ?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,13 +34,13 @@
             </li>
             <li>
                 <label>
-                    Password:
-                    <input type="password" name="Password1" required>
+                    Password :
+                    <input type="password" name="password1" required>
                 </label>
             </li>
-            <li> 
+            <li>
                 <label>
-                    Konfirmasi password :
+                    Konfirmasi Password :
                     <input type="password" name="password2" required>
                 </label>
             </li>

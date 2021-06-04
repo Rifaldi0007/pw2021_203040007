@@ -1,20 +1,19 @@
 <?php
 session_start();
 
-if(isset($_SESSION['login'])){
-    header("location: index.php");
+if(isset($_SESSION['login'])) {
+    header("Location: index.php");
     exit;
 }
 
 require 'functions.php';
 
 //ketika tombol login ditekan
-if (isset($_POST['login'])) {
-    $login = login($_POST);
+if(isset($_POST['login'])){
+   $login = login($_POST);
+
 }
  ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,13 +25,13 @@ if (isset($_POST['login'])) {
 <body>
     <h3>Form Login</h3>
     <?php if(isset($login['error'])) : ?>
-    <p style="color: red; font-style:  italic;"><?= $login['pesan']; ?></p>
+        <p style="color: red; font-style: italic;"><?= $login['pesan']; ?></p>
     <?php endif; ?>
-    <form action="" method="post">
+    <form action="" method="POST">
         <ul>
             <li>
-                <label for="">
-                    Username : 
+                <label>
+                    Username :
                     <input type="text" name="username" autofocus autocomplete="off" required>
                 </label>
             </li>
