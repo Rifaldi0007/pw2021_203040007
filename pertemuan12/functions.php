@@ -82,19 +82,17 @@ function ubah($data)
   return mysqli_affected_rows($conn);
 }
 
-function cari($keyword) 
+function cari($keyword)
 {
   $conn = koneksi();
 
   $query = "SELECT * FROM mahasiswa
-              WHERE 
-              nama LIKE '%$keyword%' OR
-              nrp LIKE '%$keyword%' OR
-              jurusan LIKE '%$keyword%' OR
-              email LIKE '%$keyword%' OR   
-              ";
-  $result = mysqli_query($conn, $query);
+            WHERE 
+            nama LIKE '%$keyword%' OR
+            nrp LIKE '%$keyword%' 
+          ";
 
+  $result = mysqli_query($conn, $query);
   $rows = [];
   while ($row = mysqli_fetch_assoc($result)) {
     $rows[] = $row;
